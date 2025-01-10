@@ -24,13 +24,15 @@ export function WorkflowCard({
     <Link href={`/patterns/${id}`}>
       <Card className="overflow-hidden transition-all hover:shadow-md hover:border-primary/20 group">
         <div className="aspect-[2/1] relative bg-muted">
-          <Image
-            src={diagram}
-            alt={`${title} workflow diagram`}
-            fill
-            priority={priority}
-            className="object-cover p-6 transition-transform duration-300 group-hover:scale-[1.02]"
-          />
+          <div className="absolute inset-0 flex items-center justify-center p-6">
+            <Image
+              src={diagram}
+              alt={`${title} workflow diagram`}
+              fill
+              priority={priority}
+              className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </div>
         </div>
         <div className="p-6">
           <div className="flex items-center justify-between gap-4">
