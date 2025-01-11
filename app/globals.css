@@ -48,16 +48,6 @@
   }
 }
 
-@layer utilities {
-  .glass-panel {
-    @apply bg-zinc-900/70 backdrop-blur-md border border-zinc-800/50 shadow-lg;
-  }
-
-  .hover-card {
-    @apply transition-all duration-300 hover:bg-zinc-800/50 hover:border-zinc-700/50;
-  }
-}
-
 .diagram-container {
   @apply w-full h-full flex items-center justify-center bg-zinc-900 rounded-lg overflow-hidden;
 }
@@ -65,4 +55,3 @@
 .diagram-container svg {
   @apply w-full h-full max-w-full max-h-full;
 }
-
