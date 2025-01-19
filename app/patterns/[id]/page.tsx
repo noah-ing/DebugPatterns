@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { patterns, Pattern } from '@/lib/patterns'
+import { CodeBlock, ImplementationBlock } from '@/components/code-block'
+import { patterns, Pattern } from '@/data'
 
 interface PageProps {
   params: {
@@ -55,31 +56,43 @@ export default function PatternPage({ params }: PageProps) {
             </div>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-12">
             <div>
               <h2 className="font-mono text-xl text-white mb-4">
-                Diagram Explanation
+                Use Cases
               </h2>
-              <p className="text-zinc-400 leading-relaxed">
-                This diagram illustrates the key concepts and flow of the {currentPattern.title} pattern. It provides a visual representation of how different components interact and the overall structure of the debugging process.
-              </p>
+              <ul className="list-disc list-inside text-zinc-400 leading-relaxed space-y-2">
+                {currentPattern.useCases.map((useCase, index) => (
+                  <li key={index}>{useCase}</li>
+                ))}
+              </ul>
             </div>
 
             <div>
-              <h2 className="font-mono text-xl text-white mb-4">
+              <h2 className="font-mono text-xl text-white mb-6">
+                Production Implementation
+              </h2>
+              <div className="space-y-6">
+                <ImplementationBlock
+                  title="Implementation"
+                  typescript={currentPattern.implementation.typescript}
+                  python={currentPattern.implementation.python}
+                />
+              </div>
+            </div>
+
+            <div>
+              <h2 className="font-mono text-xl text-white mb-6">
                 Code Examples
               </h2>
               <div className="space-y-6">
                 {currentPattern.codeExamples.map((example, index) => (
                   <div key={index} className="space-y-4">
-                    <h3 className="font-mono text-lg text-zinc-200">
-                      {example.title}
-                    </h3>
-                    <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm overflow-x-auto">
-                      <pre className="text-zinc-200 whitespace-pre">
-                        {example.code}
-                      </pre>
-                    </div>
+                    <CodeBlock
+                      title={example.title}
+                      language={example.language}
+                      code={example.code}
+                    />
                     <p className="text-zinc-400 text-sm">
                       {example.explanation}
                     </p>
@@ -90,16 +103,12 @@ export default function PatternPage({ params }: PageProps) {
 
             <div>
               <h2 className="font-mono text-xl text-white mb-4">
-                How to Use This Pattern
+                Best Practices
               </h2>
-              <p className="text-zinc-400 leading-relaxed">
-                To effectively use the {currentPattern.title} pattern in your debugging process:
-              </p>
-              <ul className="list-disc list-inside text-zinc-400 leading-relaxed mt-2 space-y-2">
-                <li>Identify the specific problem area in your code</li>
-                <li>Apply the concepts shown in the diagram to your specific case</li>
-                <li>Use appropriate tools and techniques as illustrated</li>
-                <li>Iterate through the process, refining your approach as needed</li>
+              <ul className="list-disc list-inside text-zinc-400 leading-relaxed space-y-2">
+                {currentPattern.bestPractices.map((practice, index) => (
+                  <li key={index}>{practice}</li>
+                ))}
               </ul>
             </div>
 
@@ -108,21 +117,9 @@ export default function PatternPage({ params }: PageProps) {
                 Common Pitfalls
               </h2>
               <ul className="list-disc list-inside text-zinc-400 leading-relaxed space-y-2">
-                <li>Overlooking edge cases in asynchronous flows</li>
-                <li>Neglecting error handling in promise chains</li>
-                <li>Mismanaging parallel promise execution</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="font-mono text-xl text-white mb-4">
-                Best Practices
-              </h2>
-              <ul className="list-disc list-inside text-zinc-400 leading-relaxed space-y-2">
-                <li>Always include proper error handling in promise chains</li>
-                <li>Use async/await for more readable asynchronous code</li>
-                <li>Leverage Promise.all() for parallel operations when appropriate</li>
-                <li>Implement cancellation patterns for long-running operations</li>
+                {currentPattern.commonPitfalls.map((pitfall, index) => (
+                  <li key={index}>{pitfall}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -133,21 +130,28 @@ export default function PatternPage({ params }: PageProps) {
             Related Patterns
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {patterns.filter(p => p.id !== currentPattern.id).slice(0, 2).map((relatedPattern) => (
-              <Link href={`/patterns/${relatedPattern.id}`} key={relatedPattern.id} className="block">
-                <div className="glass-panel rounded-lg p-4 hover:bg-zinc-800/50 transition-colors">
-                  <h3 className="font-mono text-lg text-zinc-200 mb-2">{relatedPattern.title}</h3>
-                  <p className="text-sm text-zinc-400">{relatedPattern.description}</p>
-                </div>
-              </Link>
-            ))}
+            {patterns
+              .filter(p => p.id !== currentPattern.id)
+              .slice(0, 2)
+              .map((relatedPattern) => (
+                <Link 
+                  href={`/patterns/${relatedPattern.id}`} 
+                  key={relatedPattern.id}
+                  className="block"
+                >
+                  <div className="glass-panel rounded-lg p-4 hover:bg-zinc-800/50 transition-colors">
+                    <h3 className="font-mono text-lg text-zinc-200 mb-2">
+                      {relatedPattern.title}
+                    </h3>
+                    <p className="text-sm text-zinc-400">
+                      {relatedPattern.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
       </div>
-
-      <footer className="flex justify-center items-center gap-1.5 text-sm text-zinc-500 py-8">
-        Made with ❤️ by Silo-22
-      </footer>
     </div>
   )
 }

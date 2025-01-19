@@ -1,14 +1,14 @@
-import { WorkflowCard } from "@/components/workflow-card"
-import { patterns } from "@/lib/patterns"
+import { WorkflowCard } from '@/components/workflow-card';
+import { patterns } from '@/data';
 
 export function PatternGrid() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-10 px-4">
       <div className="max-w-7xl w-full mx-auto">
         <div className="space-y-4 text-center mb-10">
-          <h1 className="text-4xl font-bold font-mono">Explore Debug Patterns</h1>
-          <p className="text-muted-foreground max-w-[700px] mx-auto">
-            Explore common debugging patterns with ready to copy code to improve your development workflow. These debug patterns are inspired by real-world scenarios.
+          <h1 className="text-4xl font-bold font-mono">Debug Patterns</h1>
+          <p className="text-zinc-400 max-w-[700px] mx-auto">
+            Production-ready debugging patterns with TypeScript and Python implementations. Each pattern includes comprehensive error handling, logging, and real-world examples.
           </p>
         </div>
 
@@ -21,11 +21,11 @@ export function PatternGrid() {
               description={pattern.description}
               diagram={pattern.diagram}
               category={pattern.category}
-              priority={pattern.id === "async-promise-hell"}
+              useCases={pattern.useCases}
             />
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
